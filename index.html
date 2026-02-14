@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,25 +8,33 @@
 <style>
 body {
     margin: 0;
-    overflow: hidden;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #f78da2, #ff99ac);
+    background: linear-gradient(135deg, #ff6a88, #ff99ac);
+    overflow-x: hidden;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 
+/* 💖 Animated Photo */
 .photo {
     width: 260px;
     border-radius: 20px;
+    margin-top: 40px;
     box-shadow: 0 0 25px rgba(255,255,255,0.8);
-    z-index: 1;
+    animation: floatPhoto 3s ease-in-out infinite;
 }
 
+@keyframes floatPhoto {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* 💕 Floating Emojis */
 .floating {
-    position: absolute;
-    font-size: 20px;
+    position: fixed;
+    font-size: 35px;
     animation: floatUp linear forwards;
     pointer-events: none;
 }
@@ -35,38 +44,30 @@ body {
     to { transform: translateY(-100vh); opacity: 0; }
 }
 
-.envelope-wrapper {
-    position: absolute;
-    bottom: 40px;
+/* Buttons */
+.button {
+    font-size: 60px;
     cursor: pointer;
-    animation: bounce 2s infinite;
+    margin: 20px;
+    transition: 0.3s;
 }
 
-@keyframes bounce {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+.button:hover {
+    transform: scale(1.2);
 }
 
-.envelope {
-    font-size: 70px;
-    transition: transform 0.4s ease;
-}
-
-.envelope.open {
-    transform: rotateX(40deg) scale(1.1);
-}
-
+/* 💌 Overlay (shared style) */
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.6);
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     pointer-events: none;
     transition: 0.3s;
-    z-index: 10;
+    z-index: 20;
 }
 
 .overlay.show {
@@ -74,23 +75,53 @@ body {
     pointer-events: auto;
 }
 
+/* Popup Box */
 .popup {
     background: white;
-    padding: 30px;
+    padding: 25px;
     border-radius: 20px;
-    width: 300px;
+    width: 90%;
+    max-width: 600px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     transform: scale(0.8);
     transition: 0.3s;
-    font-size: 10px;
-    color: #ff6a88;
-    line-height: 20px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .overlay.show .popup {
     transform: scale(1);
+}
+
+/* Coupon Grid */
+.coupon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.coupon {
+    background: #fff0f5;
+    padding: 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.coupon:hover {
+    transform: scale(1.05);
+}
+
+.coupon img {
+    width: 50px;
+}
+
+.hidden-text {
+    display: none;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #ff4e50;
 }
 
 .close-btn {
@@ -104,23 +135,70 @@ body {
 
 <body>
 
-<img src="love.jpeg" class="photo">
+<img src="https://picsum.photos/300" class="photo">
 
-<div class="envelope-wrapper" onclick="toggleLetter()">
-    <div class="envelope" id="env">💌</div>
-</div>
+<div class="button" onclick="toggleLetter()">💌</div>
+<div class="button" onclick="toggleCoupons()">🎁</div>
 
-<div class="overlay" id="overlay">
+<!-- 💌 Love Letter Popup -->
+<div class="overlay" id="letterOverlay">
     <div class="popup">
-        <h2>Happy Valentine’s Day, KoKo 💖</h2>
+        <h2>My Love 💖</h2>
         <p>
-            This is our 9th Valentine’s together… <br>and my heart still flutters just like the very first one. <br>Thank you for always being the living proof that 💝📌 <br> <i> <b> a man truly changes for the woman he loves </b> </i>. <br> You have shown me love not only in words, but in actions, patience, and growth.
-<br>Through all the hardships we faced in the past, we still chose each other ,again and again. And I believe with all my heart that we will continue choosing each other, every single day, for the rest of our lives.<br>
-I love you more than words could ever express.💌 <br>No sentence feels big enough to hold the depth of my feelings for you.<br> Thank you for holding me tight during my darkest and toughest moments, for being my strength when I felt weak, and my safe place when the world felt heavy.
-<br>
-<b> Forever yours. 💕✨ </b>
+            You are my happiness 💕<br>
+            My peace 💞<br>
+            My forever 💘
         </p>
         <div class="close-btn" onclick="toggleLetter()">Close</div>
+    </div>
+</div>
+
+<!-- 🎁 Coupon Popup -->
+<div class="overlay" id="couponOverlay">
+    <div class="popup">
+        <h2>Love Coupons 💝</h2>
+
+        <div class="coupon-grid">
+
+            <div class="coupon" onclick="reveal(this)">
+                <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png">
+                <div>Free Hug 🤗</div>
+                <div class="hidden-text">Unlimited warm hugs anytime 💞</div>
+            </div>
+
+            <div class="coupon" onclick="reveal(this)">
+                <img src="https://cdn-icons-png.flaticon.com/512/3468/3468373.png">
+                <div>Movie Night 🎬</div>
+                <div class="hidden-text">Your favorite movie with snacks 🍿</div>
+            </div>
+
+            <div class="coupon" onclick="reveal(this)">
+                <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png">
+                <div>Dinner Date 🍝</div>
+                <div class="hidden-text">Romantic dinner together 🌹</div>
+            </div>
+
+            <div class="coupon" onclick="reveal(this)">
+                <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+                <div>Massage 💆</div>
+                <div class="hidden-text">Relaxing massage by me 💕</div>
+            </div>
+
+            <div class="coupon" onclick="reveal(this)">
+                <img src="https://cdn-icons-png.flaticon.com/512/616/616490.png">
+                <div>Sweet Kiss 😘</div>
+                <div class="hidden-text">Redeem anytime you want 💋</div>
+            </div>
+
+            <div class="coupon" onclick="reveal(this)">
+                <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png">
+                <div>Surprise Gift 🎀</div>
+                <div class="hidden-text">Special surprise waiting 💝</div>
+            </div>
+
+        </div>
+
+        <div class="close-btn" onclick="toggleCoupons()">Close</div>
     </div>
 </div>
 
@@ -148,13 +226,21 @@ function createEmoji() {
     }, 7000);
 }
 
-setInterval(createEmoji, 700);
+setInterval(createEmoji, 800);
 
 function toggleLetter() {
-    document.getElementById("overlay").classList.toggle("show");
-    document.getElementById("env").classList.toggle("open");
+    document.getElementById("letterOverlay").classList.toggle("show");
+}
+
+function toggleCoupons() {
+    document.getElementById("couponOverlay").classList.toggle("show");
+}
+
+function reveal(element) {
+    const text = element.querySelector(".hidden-text");
+    text.style.display = text.style.display === "block" ? "none" : "block";
 }
 </script>
 
 </body>
-</>
+</html>
