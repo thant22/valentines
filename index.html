@@ -16,7 +16,6 @@ body {
     height: 100vh;
 }
 
-/* PHOTO */
 .photo {
     width: 260px;
     border-radius: 20px;
@@ -24,7 +23,6 @@ body {
     z-index: 1;
 }
 
-/* FLOATING EMOJIS */
 .floating {
     position: absolute;
     font-size: 20px;
@@ -37,7 +35,6 @@ body {
     to { transform: translateY(-100vh); opacity: 0; }
 }
 
-/* ENVELOPE CONTAINER */
 .envelope-wrapper {
     position: absolute;
     bottom: 40px;
@@ -45,24 +42,20 @@ body {
     animation: bounce 2s infinite;
 }
 
-/* Bouncing animation */
 @keyframes bounce {
     0%,100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
 
-/* Envelope body */
 .envelope {
     font-size: 70px;
     transition: transform 0.4s ease;
 }
 
-/* Open animation */
 .envelope.open {
     transform: rotateX(40deg) scale(1.1);
 }
 
-/* POPUP OVERLAY */
 .overlay {
     position: fixed;
     inset: 0;
@@ -81,7 +74,6 @@ body {
     pointer-events: auto;
 }
 
-/* POPUP BOX */
 .popup {
     background: white;
     padding: 30px;
@@ -118,7 +110,6 @@ body {
     <div class="envelope" id="env">💌</div>
 </div>
 
-<!-- Overlay Popup -->
 <div class="overlay" id="overlay">
     <div class="popup">
         <h2>Happy Valentine’s Day, KoKo 💖</h2>
