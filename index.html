@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
+
+        <style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff6a88, #ff99ac);
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 💖 Floating Photo */
+.photo {
+    width: 260px;
+    border-radius: 20px;
+    margin-top: 40px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.8);
+    animation: floatPhoto 3s ease-in-out infinite;
+}
+
+@keyframes floatPhoto {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* 💕 Floating Emojis */
+.floating {
+    position: fixed;
+    font-size: 40px;
+    animation: floatUp linear forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* Buttons */
+/* 💌🎁 Cute Floating Button Animation */
+.button {
+    font-size: 70px;
+    cursor: pointer;
+    margin: 20px;
+    transition: transform 0.3s ease;
+    animation: bounceFloat 2s ease-in-out infinite;
+}
+
+@keyframes bounceFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+/* Different speed for each */
+.button:nth-of-type(1) {
+    animation-duration: 2s;
+}
+
+.button:nth-of-type(2) {
+    animation-duration: 2.6s;
+}
+
+
+.button:hover {
+    transform: scale(1.2);
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease; /* updated */
+    z-index: 20;
+}
+
+.overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Popup — animation improved ONLY */
+.popup {
+    background: rgb(248, 204, 236);
+    padding: 30px;
+    border-radius: 25px;
+    width: 70%;
+    max-width: 800px;
+    text-align: center;
+    max-height: 80vh;
+    overflow-y: auto;
+    font-size: 12px;
+    color: #e715b3;
+    line-height: 1.6;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+    transform: scale(0.8) translateY(30px);
+    transition: all 0.35s ease;
+    opacity: 0;
+}
+
+.overlay.show .popup {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+/* Coupon Grid */
+.coupon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+@media (max-width: 900px) {
+    .coupon-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .coupon-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .coupon {
+        min-height: 220px;
+    }
+}
+
+/* Flip Card */
+.coupon {
+    perspective: 1000px;
+    height: 150px;
+    cursor: pointer;
+    position: relative;
+}
+
+.coupon-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.coupon.flipped .coupon-inner {
+    transform: rotateY(180deg);
+}
+
+.coupon-front,
+.coupon-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    backface-visibility: hidden;
+    padding: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+
+    display: flex;              /* ADD */
+    flex-direction: column;     /* ADD */
+    justify-content: center;    /* vertical center */
+    align-items: center;        /* horizontal center */
+    text-align: center;         /* text center */
+}
+
+.coupon-front {
+    background: #fff0f5;
+}
+
+.coupon-back {
+    background: #ffe6f0;
+    transform: rotateY(180deg);
+    font-size: 12px;
+}
+
+.title {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 12px;
+}
+
+
+
+/* Floating Hearts */
+@keyframes floatHeart {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-60px); opacity: 0; }
+}
+
+.close-btn {
+    margin-top: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 30px;
+    align-items: center;
+  
+}
+</style>
+</head>
+
+<body>
+
+<img src="love.jpeg" class="photo">
+
+<div class="button" onclick="toggleLetter()">💌</div>
+<div class="button" onclick="toggleCoupons()">🎁</div>
+
+<!-- 💌 Letter -->
+<div class="overlay" id="letterOverlay">
+    <div class="popup">
+     <h2>Happy Valentine’s Day, KoKo 💖</h2> <p> This is our 9th Valentine’s together… <br>and my heart still flutters just like the very first one. <br>Thank you for always being the living proof that 💝📌 <br> <i> <b> a man truly changes for the woman he loves </b> </i>. <br> You have shown me love not only in words, but in actions, patience, and growth. <br>Through all the hardships we faced in the past, we still chose each other ,again and again.<br> And I believe with all my heart that we will continue choosing each other, every single day, for the rest of our lives.<br> I love you more than words could ever express.💌 <br> No sentence feels big enough to hold the depth of my feelings for you.<br> Thank you for holding me tight during my darkest and toughest moments, for being my strength<br> when I felt weak, and my safe place when the world felt heavy. <br> <b> Forever yours. 💕✨ </b> </p>
+        <div class="close-btn" onclick="toggleLetter()">Close 💖</div>
+    </div>
+</div>
+
+<!-- 🎁 Coupons -->
+<div class="overlay" id="couponOverlay">
+<div class="popup">
+<h2>Our Cute Coupons 🎁💖</h2>
+
+<div class="coupon-grid">
+
+<!-- 1 -->
+<div class="coupon" onclick="flip(this)">
+<div class="coupon-inner">
+<div class="coupon-front">
+<div class="title">🎮 No Disturbing Gaming Mode</div>
+<div class="subtitle">🕹 1 Time</div>
+</div>
+<div class="coupon-back">
+Full peace while you play 🎧✨<br>
+No interruptions 🚫<br>
+No complaints 😇
+</div>
+</div>
+</div>
+
+<!-- 2 -->
+<div class="coupon" onclick="flip(this)">
+<div class="coupon-inner">
+<div class="coupon-front">
+<div class="title">🧹 No Nagging When Messy</div>
+<div class="subtitle">✨ 2 Times</div>
+</div>
+<div class="coupon-back">
+Mess ignored 👀💭<br>
+No lectures 🤐<br>
+Redeem wisely 😏💞
+</div>
+</div>
+</div>
+
+<!-- 3 -->
+<div class="coupon" onclick="flip(this)">
+<div class="coupon-inner">
+<div class="coupon-front">
+<div class="title">🍽 Romantic Dinner</div>
+<div class="subtitle">🌹 2 Times</div>
+</div>
+<div class="coupon-back">
+🔥 Hotpot 🍲<br>
+🥩 Steak 🕯<br>
+Romantic vibes included 💕
+</div>
+</div>
+</div>
+
+<!-- 4 -->
+<div class="coupon" onclick="flip(this)">
+<div class="coupon-inner">
+<div class="coupon-front">
+<div class="title">🎮 Buy Game Item</div>
+<div class="subtitle">💰 Max 1000 Baht <br>  Non-transferable 😝🎯</div>
+</div>
+<div class="coupon-back">
+Gaming purchase approved 🛒✨<br>
+Budget 500 Baht 💵 <br>
+
+</div>
+</div>
+</div>
+
+<!-- 5 -->
+<div class="coupon" onclick="flip(this)">
+<div class="coupon-inner">
+<div class="coupon-front">
+<div class="title">😤 No Longer Mad</div>
+<div class="subtitle"> 
+                    Instantly forgiven 💗✨<br><br>
+                    Only 1 time in lifetime 😌💖
+                    </div>
+</div>
+<div class="coupon-back">
+Instant forgiveness 💗✨<br>
+Argument cancelled 🚫 <br>
+
+</div>
+</div>
+</div>
+
+<!-- 6 -->
+<div class="coupon" onclick="flip(this)">
+<div class="coupon-inner">
+<div class="coupon-front">
+<div class="title">🌸 Buy Thant Flowers</div>
+<div class="subtitle">💖 1000 Times</div>
+</div>
+<div class="coupon-back">
+Unlimited flowers 💐✨<br>
+Because Thant deserves them 👑💝
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="close-btn" onclick="toggleCoupons()">Close 💕</div>
+</div>
+</div>
+
+<script>
+const emojis = ["💖","💕","💘","💓","💗","💞","🌹"];
+let emojiCount = 0;
+const maxEmojis = 20;
+
+function createEmoji() {
+    if (emojiCount > maxEmojis) return;
+    const el = document.createElement("div");
+    el.classList.add("floating");
+    el.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.left = Math.random()*window.innerWidth + "px";
+    el.style.bottom = "0px";
+    el.style.animationDuration = (4 + Math.random()*3) + "s";
+    document.body.appendChild(el);
+    emojiCount++;
+    setTimeout(()=>{ el.remove(); emojiCount--; },7000);
+}
+setInterval(createEmoji,800);
+
+function toggleLetter(){
+    document.getElementById("letterOverlay").classList.toggle("show");
+}
+
+function toggleCoupons(){
+    document.getElementById("couponOverlay").classList.toggle("show");
+}
+
+function flip(card){
+    card.classList.toggle("flipped");
+    const stamp = card.querySelector(".used-stamp");
+    if(card.classList.contains("flipped")){
+        stamp.style.display="block";
+        createMiniHearts(card);
+    }
+}
+
+function createMiniHearts(element){
+    for(let i=0;i<6;i++){
+        const heart=document.createElement("div");
+        heart.innerHTML="💖";
+        heart.style.position="absolute";
+        heart.style.fontSize="18px";
+        heart.style.left=Math.random()*100+"%";
+        heart.style.top="50%";
+        heart.style.animation="floatHeart 1.5s ease-out forwards";
+        element.appendChild(heart);
+        setTimeout(()=>heart.remove(),1500);
+    }
+}
+</script>
+
+</body>
+</html>
